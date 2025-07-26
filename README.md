@@ -202,3 +202,24 @@ curl -XPOST http://localhost:3000/bet \
 curl -XPOST http://localhost:3000/cashout \
   -H "Content-Type: application/json" \
   -d '{"userId":"<id>","roundNumber":1,"currency":"BTC","multiplier":2.5}'
+
+
+# Test Users:
+
+ • alice: 6884dfc1de0e6c0eb9da2a0b
+ • bob: 6884dfc1de0e6c0eb9da2a0c
+ • carol: 6884dfc1de0e6c0eb9da2a0d
+ • jeffry: 6884dfc1de0e6c0eb9da2a0e
+ • Vans: 6884dfc1de0e6c0eb9da2a0f
+
+**Fairness Algorithims Evaluation**
+
+There are two factors which ensures fairness:
+
+# Unpredictibility: 
+
+Until you reveal the seed after the crash, nobody (not even you) can know the exact multiplier.
+
+# Verifiability:
+
+Players can take your seed + round number, run the same code, and see that it produces the exact crash point you used.
