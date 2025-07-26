@@ -3,7 +3,7 @@ const axios = require("axios");
 // stores in cache memory prices, currency and timestamps
 const priceCache = {};
 
-const BASE_URL = process.env.CRYPTO_API_BASE_URL;
+const BASE_URL = process.env.CRYPTO_API_BASE_URL?.replace(/\/+$/, "") || "https://api.coingecko.com/api/v3";
 const TTL_MS = (parseInt(process.env.PRICE_CACHE_TTL_SECONDS, 10) || 10) * 1000;
 
 // Mapping API specific ids which are needed
@@ -21,6 +21,12 @@ async function fetchPrice(symbol) {
   try {
     const url = `${BASE_URL}/simple/price`;
     const params = { ids: id, vs_currencies: "usd" };
+
+    const headers = {
+      // CoinGecko politely asks for a User-Agent
+      'Accept': 'application/json',
+      'User-Agent': 'CryptoCrash/1.0 (+https://crash-bet.vercel.app/)'
+    };
 
     // if you uses key based APIs uncomment below section:
     // if (process.env.CRYPTO_API_KEY) {
