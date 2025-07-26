@@ -1,0 +1,88 @@
+{
+  "info": {
+    "name": "Crypto Crash Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Test collection for /wallet, /bet, and /cashout endpoints with multiplier"
+  },
+  "item": [
+    {
+      "name": "Get Wallet Balance",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/wallet?userId={{userId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["wallet"],
+          "query": [
+            { "key": "userId", "value": "{{userId}}" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Place Bet",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"roundNumber\": {{roundNumber}},\n  \"usdAmount\": {{usdAmount}},\n  \"currency\": \"{{currency}}\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/bet",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["bet"]
+        }
+      }
+    },
+    {
+      "name": "Cash Out",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"roundNumber\": {{roundNumber}},\n  \"currency\": \"{{currency}}\",\n  \"multiplier\": {{multiplier}}\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/cashout",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["cashout"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "roundNumber",
+      "value": "1"
+    },
+    {
+      "key": "usdAmount",
+      "value": "10"
+    },
+    {
+      "key": "currency",
+      "value": "BTC"
+    },
+    {
+      "key": "multiplier",
+      "value": "2.5"
+    }
+  ]
+}
