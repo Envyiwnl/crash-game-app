@@ -14,7 +14,8 @@ export default function BetForm({
   const placeBet = async () => {
     if (!userId) return alert("Enter your user ID");
     try {
-      await axios.post("http://localhost:3000/bet", {
+      const base = import.meta.env.VITE_API_BASE_URL;
+      await axios.post(`${base}/bet`, {
         userId,
         roundNumber,
         usdAmount,
