@@ -5,9 +5,11 @@ export const SocketContext = createContext(null);
 
 // initialize socket once
 export function SocketProvider({ children }) {
+
+  const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
   
   const [socket] = useState(() =>
-    io('http://localhost:3000', { transports: ['websocket'] })
+    io(BACKEND_URL, { transports: ['websocket'] })
   );
 
   useEffect(() => {
