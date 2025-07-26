@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
+const mongoose = require('mongoose');
 
 const User = require('../models/User');
 const Round = require('../models/Round');
@@ -45,8 +46,8 @@ router.post('/', async (req, res) => {
 
     // Locate the bet transaction
     const betTx = await Transaction.findOne({
-      player: userId,
-      round: round._id,
+      player: mongoose.Types.ObjectId(userId),
+      round: mongoose.Types.ObjectId(round._id),
       type: 'bet'
     });
     if (!betTx) {
@@ -55,8 +56,8 @@ router.post('/', async (req, res) => {
 
     // Prevent double cashout trys
     const already = await Transaction.findOne({
-      player: userId,
-      round: round._id,
+      player: mongoose.Types.ObjectId(userId),
+      round: mongoose.Types.ObjectId(round._id),
       type: 'cashout'
     });
     if (already) {

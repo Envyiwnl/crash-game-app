@@ -9,15 +9,14 @@ const CG_BASE =
   process.env.CRYPTO_API_BASE_URL?.replace(/\/+$/, '') ||
   'https://api.coingecko.com/api/v3';
 
-// Binance ticker endpoint
+// Binance ticker endpoint if coingecko fails as a fallback
 const BINANCE_URL = 'https://api.binance.com/api/v3/ticker/price';
 
-// Map symbols → CoinGecko IDs
+// Map symbols to CoinGecko IDs
 const ID_MAP = { BTC: 'bitcoin', ETH: 'ethereum' };
 
-/**
- * Fetch fresh price from CoinGecko, with headers.
- */
+//Fetch fresh price from CoinGecko, with headers.
+
 async function fetchPriceCG(symbol) {
   const id = ID_MAP[symbol];
   if (!id) throw new Error(`Unsupported currency ${symbol}`);
@@ -37,9 +36,7 @@ async function fetchPriceCG(symbol) {
   return price;
 }
 
-/**
- * Fetch fresh price from Binance.
- */
+// Fetch fresh price from Binance as its does need headers.
 async function fetchPriceBinance(symbol) {
   const pair = `${symbol}USDT`;
   const { data } = await axios.get(BINANCE_URL, { params: { symbol: pair } });
@@ -48,9 +45,7 @@ async function fetchPriceBinance(symbol) {
   return price;
 }
 
-/**
- * Try CoinGecko, on 403 or network error fallback to Binance.
- */
+// Try CoinGecko, on 403 or network error fallback to Binance.
 async function fetchPrice(symbol) {
   try {
     return await fetchPriceCG(symbol);
@@ -61,9 +56,7 @@ async function fetchPrice(symbol) {
   }
 }
 
-/**
- * Cache‐aware price getter.
- */
+// Cache‐aware price getter.
 async function getPrice(symbol) {
   const entry = priceCache[symbol];
   const now = Date.now();
@@ -75,7 +68,7 @@ async function getPrice(symbol) {
   return price;
 }
 
-/** Convert USD → crypto */
+// Convert USD to crypto
 async function convertUsdToCrypto(usdAmount, symbol) {
   if (typeof usdAmount !== 'number' || usdAmount <= 0) {
     throw new Error(`Invalid USD amount: ${usdAmount}`);
@@ -84,7 +77,7 @@ async function convertUsdToCrypto(usdAmount, symbol) {
   return usdAmount / price;
 }
 
-/** Convert crypto → USD */
+// Convert crypto to USD
 async function convertCryptoToUsd(cryptoAmount, symbol) {
   if (typeof cryptoAmount !== 'number' || cryptoAmount < 0) {
     throw new Error(`Invalid crypto amount: ${cryptoAmount}`);
