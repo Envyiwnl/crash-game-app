@@ -140,11 +140,22 @@ Body (JSON): {
 
 Connect to ws://localhost:3000 via Socket.IO and listen for:
 Event	Direction	Payload
-round:pending	server → ws	{ roundNumber, seedHash, betWindow }
-round:start	server → ws	{ roundNumber }
-multiplier:update	server → ws	{ multiplier }
-round:crash	server → ws	{ crashPoint }
-player:cashout	server → ws	{ userId, payoutCrypto, usdAmount, currency }
+round:pending	server -> ws	{ roundNumber, seedHash, betWindow }
+round:start	server -> ws	{ roundNumber }
+multiplier:update	server -> ws	{ multiplier }
+round:crash	server -> ws	{ crashPoint }
+player:cashout	server -> ws	{ userId, payoutCrypto, usdAmount, currency }
+
+ **round:pending**
+   Payload: `{ roundNumber: number, seedHash: string, betWindow: number }`
+ **round:start**
+   Payload: `{ roundNumber: number }`
+ **multiplier:update**
+   Payload: `{ multiplier: number }`
+ **player:cashout**
+   Payload: `{ userId: string, payoutCrypto: number, usdAmount: number, currency: string }`
+ **round:crash**
+   Payload: `{ crashPoint: number }`
 
 # emit from client:
 
