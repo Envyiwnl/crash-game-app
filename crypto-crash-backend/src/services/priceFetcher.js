@@ -3,7 +3,9 @@ const axios = require("axios");
 // stores in cache memory prices, currency and timestamps
 const priceCache = {};
 
-const BASE_URL = process.env.CRYPTO_API_BASE_URL?.replace(/\/+$/, "") || "https://api.coingecko.com/api/v3";
+const BASE_URL =
+  process.env.CRYPTO_API_BASE_URL?.replace(/\/+$/, "") ||
+  "https://api.coingecko.com/api/v3";
 const TTL_MS = (parseInt(process.env.PRICE_CACHE_TTL_SECONDS, 10) || 10) * 1000;
 
 // Mapping API specific ids which are needed
@@ -24,8 +26,8 @@ async function fetchPrice(symbol) {
 
     const headers = {
       // CoinGecko politely asks for a User-Agent
-      'Accept': 'application/json',
-      'User-Agent': 'CryptoCrash/1.0 (+https://crash-bet.vercel.app/)'
+      Accept: "application/json",
+      "User-Agent": "CryptoCrash/1.0 (+https://crash-bet.vercel.app/)",
     };
 
     // if you uses key based APIs uncomment below section:
@@ -33,7 +35,10 @@ async function fetchPrice(symbol) {
     //   params.apikey = process.env.CRYPTO_API_KEY;
     // }
 
-    const { data } = await axios.get(url, { params });
+    const { data } = await axios.get(url, {
+      params,
+      headers,
+    });
     const price = data[id]?.usd;
     if (typeof price !== "number") {
       throw new Error(`Invalid Response for ${symbol} price`);
